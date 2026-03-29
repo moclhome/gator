@@ -12,6 +12,6 @@ func handlerLogin(s *config.State, cmd command) error {
 	if err := s.Config.SetUser(cmd.arguments[0]); err != nil {
 		return err
 	}
-	fmt.Printf("User set to %s", cmd.arguments[0])
+	fmt.Printf("User set to %s\n", cmd.arguments[0])
 	return nil
 }

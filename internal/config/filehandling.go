@@ -19,7 +19,7 @@ func Read() (Config, error) {
 		return Config{}, fmt.Errorf("error getting home directory: %v", err)
 	}
 	if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
-		return Config{}, fmt.Errorf("config file " + path + " not found.")
+		return Config{}, fmt.Errorf("config file %s not found.", path)
 	} else {
 		data, err := os.ReadFile(path)
 		if err != nil {

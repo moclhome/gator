@@ -2,7 +2,6 @@ package main
 
 import (
 	"bootdev/go/gator/internal/config"
-	"fmt"
 	"log"
 	"os"
 )
@@ -24,7 +23,7 @@ func main() {
 		log.Fatal("There must be at least one argument used as a command for the gator program to work")
 	}
 	commandName := arguments[1]
-	parameters := arguments[2:len(arguments)]
+	parameters := arguments[2:]
 	theCommand := command{
 		name:      commandName,
 		arguments: parameters,
@@ -33,13 +32,5 @@ func main() {
 		log.Fatalf("Error running command %s: %v", theCommand.name, err)
 	}
 
-	/*	err = theConfig.SetUser("Lauli")
-		if err != nil {
-			log.Fatal(err)
-		}
-		theConfig, err = config.Read()
-		if err != nil {
-			log.Fatal(err)
-		}*/
-	fmt.Printf("%v\n", theConfig)
+	//fmt.Printf("%v\n", theConfig)
 }
