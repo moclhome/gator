@@ -1,17 +1,25 @@
 package main
 
 import (
-	"bootdev/go/gator/internal/config"
+	"context"
 	"fmt"
 )
 
-func handlerLogin(s *config.State, cmd command) error {
+func handlerLogin(s *state, cmd command) error {
 	if len(cmd.arguments) != 1 {
 		return fmt.Errorf("Usage: login <username>")
 	}
-	if err := s.Config.SetUser(cmd.arguments[0]); err != nil {
+	userName := cmd.arguments[0]
+
+	bgrd := context.Background()
+
+	_, err := s.db.GetUser(bgrd, userName)
+	if err != nil {
 		return err
 	}
-	fmt.Printf("User set to %s\n", cmd.arguments[0])
+	if err := s.config.SetUser(userName); err != nil {
+		return err
+	}
+	fmt.Printf("User set to %s\n", userName)
 	return nil
 }

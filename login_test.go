@@ -10,8 +10,8 @@ func TestLogin(t *testing.T) {
 	testConfig := config.Config{
 		Db_url: "test_db",
 	}
-	theState := config.State{
-		Config: &testConfig,
+	theState := state{
+		config: &testConfig,
 	}
 	theCommand := command{
 		name: "login",
@@ -61,7 +61,7 @@ func TestLogin(t *testing.T) {
 				t.Fatalf("Error during login: %v, no expected error.", err)
 			}
 
-			errorText, ok := testConfigData("Test if config is set", *theState.Config, c.expectedConfig)
+			errorText, ok := testConfigData("Test if config is set", *theState.config, c.expectedConfig)
 			if !ok {
 				t.Fatalf("%s", errorText)
 			}
@@ -69,7 +69,7 @@ func TestLogin(t *testing.T) {
 			errorText, ok = testConfigData("Test if file is written", newConfig, c.expectedConfig)
 		})
 		// remove the user from file for next test
-		theState.Config.SetUser("")
+		theState.config.SetUser("")
 	}
 }
 
