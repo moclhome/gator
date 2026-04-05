@@ -11,7 +11,8 @@ type command struct {
 }
 
 type commands struct {
-	commandMap map[string]func(*state, command) error
+	commandMap            map[string]func(*state, command) error
+	commandDescriptionMap map[string]string
 }
 
 func (c *commands) run(s *state, cmd command) error {
@@ -22,6 +23,7 @@ func (c *commands) run(s *state, cmd command) error {
 	return function(s, cmd)
 }
 
-func (c *commands) register(name string, f func(*state, command) error) {
+func (c *commands) register(name string, f func(*state, command) error, desc string) {
 	c.commandMap[name] = f
+	c.commandDescriptionMap[name] = desc
 }
