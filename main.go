@@ -69,4 +69,5 @@ func registerCommands(cmds *commands) {
 	cmds.register("following", middlewareLoggedIn(handlerFollowing), "Usage: following. Lists all feeds that are followed by the current user.")
 	cmds.register("help", handlerHelp, "Usage: help. Lists all upported commands with their ddescriptions.")
 	cmds.register("unfollow", middlewareLoggedIn(handlerUnfollow), "Usage: unfollow <url>. Removes the current user from the followers of this feed.")
+	cmds.register("browse", middlewareLoggedIn(handlerBrowse), "Usage: browsw [limit]. Lists the posts of the current user. Optionally restricted to \"limit\" posts.")
 }

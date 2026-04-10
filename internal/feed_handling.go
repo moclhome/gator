@@ -52,7 +52,7 @@ func FetchFeed(ctx context.Context, feedURL string) (*RSSFeed, error) {
 
 	var theFeed RSSFeed
 	if err = xml.Unmarshal(data, &theFeed); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Error unmarshalling feed %s: %v", feedURL, err)
 	}
 	theFeed.Channel.Title = html.UnescapeString(theFeed.Channel.Title)
 	theFeed.Channel.Description = html.UnescapeString(theFeed.Channel.Description)
