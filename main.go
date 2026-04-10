@@ -63,9 +63,10 @@ func registerCommands(cmds *commands) {
 	cmds.register("reset", handlerReset, "Usage: reset. All users and feeds are deleted.")
 	cmds.register("users", handlerUsers, "Usage: users. A list of all users is displayed. The current user is marked.")
 	cmds.register("agg", handlerAgg, "Usage: agg. TODO")
-	cmds.register("addfeed", handlerAddFeed, "Usage: addFeed <feedName> <url>. Saves a feed with this name and url and lets the current user follow it.")
+	cmds.register("addfeed", middlewareLoggedIn(handlerAddFeed), "Usage: addFeed <feedName> <url>. Saves a feed with this name and url and lets the current user follow it.")
 	cmds.register("feeds", handlerFeeds, "Usage: feeds. A list of all feeds is displayed, together with the user who has added this feed.")
-	cmds.register("follow", handlerFollow, "Usage: follow <url>. Adds the current user to the followers of this feed.")
-	cmds.register("following", handlerFollowing, "Usage: following. Lists all feeds that are followed by the current user.")
+	cmds.register("follow", middlewareLoggedIn(handlerFollow), "Usage: follow <url>. Adds the current user to the followers of this feed.")
+	cmds.register("following", middlewareLoggedIn(handlerFollowing), "Usage: following. Lists all feeds that are followed by the current user.")
 	cmds.register("help", handlerHelp, "Usage: help. Lists all upported commands with their ddescriptions.")
+	cmds.register("unfollow", middlewareLoggedIn(handlerUnfollow), "Usage: unfollow <url>. Removes the current user from the followers of this feed.")
 }

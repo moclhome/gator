@@ -54,7 +54,6 @@ func FetchFeed(ctx context.Context, feedURL string) (*RSSFeed, error) {
 	if err = xml.Unmarshal(data, &theFeed); err != nil {
 		return nil, err
 	}
-	fmt.Printf("Title before: %s\n", theFeed.Channel.Title)
 	theFeed.Channel.Title = html.UnescapeString(theFeed.Channel.Title)
 	theFeed.Channel.Description = html.UnescapeString(theFeed.Channel.Description)
 	for i, item := range theFeed.Channel.Item {

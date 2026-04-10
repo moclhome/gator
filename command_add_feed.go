@@ -9,25 +9,21 @@ import (
 	"github.com/google/uuid"
 )
 
-func handlerAddFeed(s *state, cmd command) error {
+func handlerAddFeed(s *state, cmd command, user database.User) error {
 	if len(cmd.arguments) != 2 {
 		return fmt.Errorf("Usage: addFeed <feedName> <url>")
 	}
 	feedName := cmd.arguments[0]
 	url := cmd.arguments[1]
 	bgrd := context.Background()
-	currentUserName := s.config.Current_user_name
-	currentUser, err := s.db.GetUser(bgrd, currentUserName)
-	if err != nil {
-		return err
-	}
+	currentUserName := user.Name
 
 	feedParams := database.CreateFeedParams{
 		ID:              uuid.New(),
 		CreatedAt:       time.Now(),
 		UpdatedAt:       time.Now(),
 		Name:            feedName,
-		CreatedByUserID: currentUser.ID,
+		CreatedByUserID: user.ID,
 		Url:             url,
 	}
 	newFeed, err := s.db.CreateFeed(bgrd, feedParams)
@@ -39,7 +35,7 @@ func handlerAddFeed(s *state, cmd command) error {
 		ID:              uuid.New(),
 		CreatedAt:       time.Now(),
 		UpdatedAt:       time.Now(),
-		FollowingUserID: currentUser.ID,
+		FollowingUserID: user.ID,
 		FollowedFeedID:  newFeed.ID,
 	}
 	_, err = s.db.CreateFeedFollow(bgrd, followParams)
@@ -47,6 +43,6 @@ func handlerAddFeed(s *state, cmd command) error {
 		return err
 	}
 
-	fmt.Printf("Feed %s has been created by user %s.\nValues: %v", feedName, currentUserName, newFeed)
+	fmt.Printf("Feed %s has been created by user %s.\nValues: %v\n", feedName, currentUserName, newFeed)
 	return nil
 }

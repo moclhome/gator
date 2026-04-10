@@ -21,3 +21,10 @@ WHERE ff.following_user_id = u.id
   AND ff.followed_feed_id = f.id
   AND u.name = $1
 ;
+
+-- name: DeleteFeedFollow :exec
+DELETE
+FROM feed_follows ff
+WHERE ff.following_user_id = $1
+  AND ff.followed_feed_id = $2
+;
