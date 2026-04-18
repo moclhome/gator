@@ -69,5 +69,7 @@ func registerCommands(cmds *commands) {
 	cmds.register("following", middlewareLoggedIn(handlerFollowing), "Usage: following. Lists all feeds that are followed by the current user.")
 	cmds.register("help", handlerHelp, "Usage: help. Lists all upported commands with their ddescriptions.")
 	cmds.register("unfollow", middlewareLoggedIn(handlerUnfollow), "Usage: unfollow <url>. Removes the current user from the followers of this feed.")
-	cmds.register("browse", middlewareLoggedIn(handlerBrowse), "Usage: browsw [limit]. Lists the posts of the current user. Optionally restricted to \"limit\" posts.")
+	cmds.register("browse", middlewareLoggedIn(handlerBrowse), "Usage: browse [limit]. Lists the posts of the current user (only title, posting date and url). Optionally restricted to \"limit\" posts. Limit defaults to 2.")
+	cmds.register("read", middlewareLoggedIn(handlerRead), "Usage: read [limit]. Lists the posts of the current user, including the description. Optionally restricted to \"limit\" posts. Limit defaults to 2.")
+	cmds.register("open", middlewareLoggedIn(handlerOpen), "Usage: open <url>. Opens the specified URL in the default web browser.")
 }

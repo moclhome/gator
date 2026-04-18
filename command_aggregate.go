@@ -35,7 +35,11 @@ func handlerAgg(s *state, cmd command) error {
 func scrapeFeeds(s *state) {
 	bgrd := context.Background()
 
-	nextFeed, err := s.db.GetNextFeedToFetch(bgrd)
+	userId, err := s.db.GetUser(bgrd, s.config.Current_user_name)
+	if err != nil {
+		log.Println("Error fetching user: ", err)
+	}
+	nextFeed, err := s.db.GetNextFeedToFetch(bgrd, userId.ID)
 	if err != nil {
 		log.Println("Couldn't get next feed to fetch: ", err)
 	}
